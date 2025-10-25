@@ -7,7 +7,7 @@ const router = useRouter();
 
 const curActive = ref("home");
 
-function tabClick(item) {
+const tabClick = item => {
   curActive.value = item.key
   router.push({
     path: item.path
@@ -21,7 +21,8 @@ function tabClick(item) {
         :key="item.key" 
         class="item" 
         :class="{active: curActive === item.key}" 
-        @click="tabClick(item)">
+        @click="tabClick(item)"
+    >
       <img :src="curActive === item.key ? item.activeImage : item.image" />
       <span class="text">
         {{ item.text }}
@@ -43,7 +44,7 @@ function tabClick(item) {
     text-align: center;
 
     &.active {
-      color: orange;
+      color: var(--primary-color);
     }
     img {
       width: 36px;

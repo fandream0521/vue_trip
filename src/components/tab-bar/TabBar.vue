@@ -40,9 +40,12 @@ const tabClick = item => {
   border-top: 1px solid #f3f3f3;
 
   .item {
-    flex: 0;
-    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
 
+    justify-content: center;
+    align-items: center;
     &.active {
       color: var(--primary-color);
     }
@@ -52,6 +55,7 @@ const tabClick = item => {
 
     .text {
       font-size: 12px;
+      margin-top: 3px;
     }
   }  
 }

@@ -1,4 +1,6 @@
 <script setup>
+import HomeSearchBox from './cpns/HomeSearchBox.vue';
+
 
 </script>
 
@@ -12,14 +14,7 @@
     <div class="banner">
       <img src="@/assets/imgs/home/banner.webp" />
     </div>
-
-    <div class="location">
-      <div class="city">杭州</div>
-      <div class="position">
-        <span class="text">我的位置</span>
-        <img src="@/assets/imgs/home/icon_location.png" />
-      </div>
-    </div>
+    <HomeSearchBox />
   </div>
 </template>
 
@@ -46,28 +41,6 @@
     }
   }
 
-  .location {
-    display: flex;
-    align-items: center;
 
-    height: 44px;
-    padding: 0 20px;
-
-    .city {
-      flex: 1;
-    }
-
-    .position {
-      width: 74px;
-
-      font-size: 12px;
-
-      img {
-        width: 18px;
-        height: 18px;
-        margin-left: 5px;
-      }
-    }
-  }
 }
 </style>

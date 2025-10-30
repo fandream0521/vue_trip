@@ -1,9 +1,31 @@
 :root {
-  --primary-color: #ff9854
+  --primary-color: #ff9854;
+
+  --van-search-left-icon-color: var(--primary-color) !important;
 }
 
 
 body {
   font-size: 14px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.top-page {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.icon {
+  display: inline-block;
+  background: url(../imgs/home/home-sprite.png) no-repeat ;
+  background-size: 207px 192px;
+}
+
+.icon-search {
+  width: 14px;
+  height: 14px;
+  background-position: -191px -85px;
 }

@@ -20,6 +20,7 @@ const curActive = ref("home");
 </template>
 
 <style lang="less" scoped>
+
 :deep(.van-tabbar-item__icon) img {
   width: 36px;
   height: auto;

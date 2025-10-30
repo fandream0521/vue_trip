@@ -20,6 +20,13 @@ const routes = [
   {
     path: "/message",
     component: () => import(/* webpackChunkName: "message" */"@/views/message/Message.vue")
+  },
+  {
+    path: "/city",
+    component: () => import(/* webpackChunkName: "city" */"@/views/city/City.vue"),
+    meta: {
+      tabBarHidden: true
+    }
   }
   
 ]

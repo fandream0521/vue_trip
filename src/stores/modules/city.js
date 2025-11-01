@@ -1,12 +1,25 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { getAllCity } from '@/service';
+import { useRouter } from 'vue-router';
+
 
 export const useCityStore = defineStore('city', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+  const allCity = ref({});
+  const curCity = ref({});
+  const router = useRouter();
+
+  async function loadAllCity() {
+    console.log("loading all city ...")
+    const result = await getAllCity();
+    allCity.value = result.data;
   }
 
-  return { count, doubleCount, increment }
+  function setCurCity(city) {
+    curCity.value = city;
+    console.log('curCity', curCity.value)
+    router.back();
+  }
+
+  return { allCity, curCity, loadAllCity, setCurCity }
 })

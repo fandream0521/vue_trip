@@ -1,12 +1,13 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { getHotSuggests } from '@/service/modules/home';
 
 export const useHomeStore = defineStore('home', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+  const hotSuggests = ref([]);
+  async function loadHotSuggests() {
+    const result = await getHotSuggests();
+    hotSuggests.value = result.data;
   }
 
-  return { count, doubleCount, increment }
+  return { hotSuggests, loadHotSuggests }
 })

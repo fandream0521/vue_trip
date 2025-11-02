@@ -11,7 +11,7 @@ export const useLoadingStore = defineStore("loading", () => {
   function end() {
     setTimeout(() => {
       isLoading.value = false;
-    }, 600)
+    }, 400)
   }
   return { 
     isLoading,

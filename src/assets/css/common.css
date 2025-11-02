@@ -29,3 +29,8 @@ body {
   height: 14px;
   background-position: -191px -85px;
 }
+
+
+.bottom-gray-line {
+  border-bottom: 1px solid #fafafa;
+}

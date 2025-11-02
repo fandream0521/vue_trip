@@ -39,19 +39,15 @@ const { curCity } = storeToRefs(cityStore)
   .location {
     display: flex;
     align-items: center;
-
     height: 44px;
-    padding: 0 20px;
 
     .city {
       flex: 1;
-
       color: #333;
     }
 
     .position {
       width: 74px;
-
       font-size: 12px;
 
       .text {

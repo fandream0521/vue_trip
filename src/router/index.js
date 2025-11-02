@@ -27,6 +27,10 @@ const routes = [
     meta: {
       tabBarHidden: true
     }
+  },
+  {
+    path: "/search",
+    component: () => import(/* webpackChunkName: "message" */"@/views/search/Search.vue")
   }
   
 ]

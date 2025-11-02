@@ -1,18 +1,26 @@
 <script setup>
-import { ref } from "vue"
-import { useRouter } from "vue-router"
+import { ref, watch } from "vue"
+import { useRoute, useRouter } from "vue-router"
 import tabBarData from "@/assets/data/tab-bar"
 
 const router = useRouter();
 
-const curActive = ref("home");
+const route = useRoute();
 
+const curActive = ref("home");
 const tabClick = item => {
   curActive.value = item.key
   router.push({
     path: item.path
   })
 }
+
+watch(route, (val) => {
+  const curTabBar = tabBarData.find(data => data.path === val.path);
+  console.log(route, route.fullPath, curTabBar)
+  curActive.value = curTabBar.key;
+})
+
 </script>
 
 <template>
@@ -46,7 +54,7 @@ const tabClick = item => {
 
     justify-content: center;
     align-items: center;
-    &.active {
+    &.active .text {
       color: var(--primary-color);
     }
     img {

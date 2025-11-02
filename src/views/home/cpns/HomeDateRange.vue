@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-import { formatDate, diffDate, today } from '@/utils/date';
+import { useUserStore } from '@/stores/modules/user';
+import { storeToRefs } from 'pinia';
 
-const endDate = ref();
-const startDate = ref();
-const diffDay = ref()
+const userStore = useUserStore();
+const { startDate, endDate, diffDay } = storeToRefs(userStore);
+const { updateDate } = userStore;
 
 const show = ref(false);
 const onConfirm = (values) => {
@@ -12,12 +13,6 @@ const onConfirm = (values) => {
   updateDate(start, end);
   show.value = false;
 };
-
-const updateDate = (start, end) => {
-  startDate.value = formatDate(start)
-  endDate.value = formatDate(end)
-  diffDay.value = diffDate(start, end)
-}
 
 const formatter = (day) => {
   if (day.type === 'start') {
@@ -29,8 +24,6 @@ const formatter = (day) => {
   return day;
 };
 
-const curDate = today();
-updateDate(curDate, curDate.add(1, "day"))
 </script>
 
 <template>

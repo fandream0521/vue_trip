@@ -1,13 +1,14 @@
 <script setup>
+import useScrollData from '@/hooks/useScrollData';
+import HomeContent from './cpns/HomeContent.vue';
 import HomeSearchBox from './cpns/HomeSearchBox.vue';
-import HomeDateRange from './cpns/HomeDateRange.vue';
-import { useHomeStore } from '@/stores/modules/home';
-import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 
-const homeStore = useHomeStore();
-const { hotSuggests } = storeToRefs(homeStore);
-const { loadHotSuggests } = homeStore;
-loadHotSuggests();
+const { scrollTop } = useScrollData();
+
+const isShowSearchBar = computed(() => {
+  return scrollTop.value >= 450;
+})
 </script>
 
 <template>
@@ -20,25 +21,11 @@ loadHotSuggests();
     <div class="banner">
       <img src="@/assets/imgs/home/banner.webp" />
     </div>
+    <HomeSearchBox />
+    <HomeContent />
 
-    <div class="info">
-      <HomeSearchBox />
-      <HomeDateRange class="bottom-gray-line"/>
-      <div class="price-counter bottom-gray-line">
-        <span class="start item">价格不限</span>
-        <span class="item"></span>
-        <span class="end item">人数不限</span>
-      </div>
-      <div class="keyword bottom-gray-line">
-        关键字/位置/民宿名
-      </div>
-      <ul class="hot-suggest">
-        <li v-for="(item, index) in hotSuggests" class="item" :key="index" :style="{ color: item.tagText.color, background: item.tagText.background.color}">
-          <a :href="item.tagLink" >
-            {{ item.tagText.text }}
-          </a>
-        </li>
-      </ul>
+    <div class="search-bar" v-if="isShowSearchBar">
+
     </div>
   </div>
 </template>
@@ -66,42 +53,17 @@ loadHotSuggests();
     }
   }
 
-  .info {
-    padding: 0 20px;
-    
+  .search-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    padding: 16px 16px 10px;
 
-    .price-counter {
-      display: flex;
-      justify-content: space-between;
+    z-index: 100;
 
-      height: 44px;
-      line-height: 44px;
-
-      color: #aaa;
-      font-size: 14px;
-      .item {
-        flex: 1;
-      }
-    }
-
-    .keyword {
-      height: 44px;
-      line-height: 44px;
-      color: #aaa;
-      font-size: 14px;
-    }
-
-    .hot-suggest {
-      display: flex;
-      flex-flow: wrap;
-
-      margin: 10px 0;
-      .item {
-        padding: 3px 6px;
-        margin: 4px;
-        border-radius: 10px;
-      }
-    }
+    background-color: white;
   }
 }
 </style>

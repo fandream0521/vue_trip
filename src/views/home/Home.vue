@@ -3,6 +3,7 @@ import useScrollData from '@/hooks/useScrollData';
 import HomeContent from './cpns/HomeContent.vue';
 import HomeSearchBox from './cpns/HomeSearchBox.vue';
 import { computed } from 'vue';
+import SearchBar from '@/components/search-bar/SearchBar.vue';
 
 const { scrollTop } = useScrollData();
 
@@ -24,9 +25,7 @@ const isShowSearchBar = computed(() => {
     <HomeSearchBox />
     <HomeContent />
 
-    <div class="search-bar" v-if="isShowSearchBar">
-
-    </div>
+    <SearchBar  v-if="isShowSearchBar"/>
   </div>
 </template>
 
@@ -53,17 +52,6 @@ const isShowSearchBar = computed(() => {
     }
   }
 
-  .search-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 45px;
-    padding: 16px 16px 10px;
 
-    z-index: 100;
-
-    background-color: white;
-  }
 }
 </style>

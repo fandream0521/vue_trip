@@ -36,7 +36,7 @@ export default function() {
     console.log('是否到底底部:', isAtBottom.value)
   };
 
-  const debounceFn = debounce(updateScrollData, 50)
+  const debounceFn = debounce(updateScrollData, 10)
 
   onMounted(() => {
     window.addEventListener("scroll", debounceFn);

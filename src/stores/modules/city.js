@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 
 export const useCityStore = defineStore('city', () => {
   const allCity = ref({});
-  const curCity = ref({});
+  const curCity = ref({ cityName: '杭州'});
   const router = useRouter();
 
   async function loadAllCity() {

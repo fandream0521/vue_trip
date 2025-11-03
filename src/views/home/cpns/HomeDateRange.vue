@@ -1,28 +1,13 @@
 <script setup>
-import { ref } from 'vue';
 import { useUserStore } from '@/stores/modules/user';
 import { storeToRefs } from 'pinia';
+import { formatDate } from '@/utils/date';
+import useCalendar from '@/hooks/useCalendar';
 
 const userStore = useUserStore();
 const { startDate, endDate, diffDay } = storeToRefs(userStore);
-const { updateDate } = userStore;
 
-const show = ref(false);
-const onConfirm = (values) => {
-  const [start, end] = values;
-  updateDate(start, end);
-  show.value = false;
-};
-
-const formatter = (day) => {
-  if (day.type === 'start') {
-    day.bottomInfo = '入住';
-  } else if (day.type === 'end') {
-    day.bottomInfo = '离店';
-  }
-
-  return day;
-};
+const { show, onConfirm, formatter } = useCalendar();
 
 </script>
 
@@ -31,14 +16,14 @@ const formatter = (day) => {
     <div class="show" @click="show = true">
       <div class="start item">
         <span class="name">入住</span>
-        <span class="date">{{ startDate }}</span>
+        <span class="date">{{ formatDate(startDate) }}</span>
       </div>
       <div class="stay item">
         <span>共 {{ diffDay }} 晚</span>
       </div>
       <div class="end item">
         <span class="name">离店</span>
-        <span class="date">{{ endDate }}</span>
+        <span class="date">{{ formatDate(endDate) }}</span>
       </div>
     </div>
     <div class="calendar">

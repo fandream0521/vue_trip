@@ -1,11 +1,11 @@
-import { useUserStore } from "@/stores/modules/user";
+import { useMainStore } from "@/stores/modules/main";
 import { ref } from "vue";
 
 export default function () {
   const show = ref(false);
 
-  const userStore = useUserStore();
-  const { updateDate } = userStore;
+  const mainStore = useMainStore();
+  const { updateDate } = mainStore;
 
   const onConfirm = (values) => {
     const [start, end] = values;

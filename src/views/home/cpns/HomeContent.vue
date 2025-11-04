@@ -5,6 +5,7 @@ import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import HouseItemV3 from '@/components/house-item-v3/HouseItemV3.vue';
 import HouseItemV9 from '@/components/house-item-v9/HouseItemV9.vue';
+import { useRouter } from 'vue-router';
 
 const homeStore = useHomeStore();
 const { houseList, curPage } = storeToRefs(homeStore);
@@ -17,6 +18,14 @@ watch(isAtBottom, (val) => {
   }
 })
 
+const router = useRouter();
+
+const itemClick = (houseId) => {
+  router.push({
+    path: `/detail/${houseId}`
+  })
+}
+
 </script>
 
 <template>
@@ -25,8 +34,8 @@ watch(isAtBottom, (val) => {
     <div class="house-list">
       <ul class="list">
         <li v-for="house in houseList" :key="house.data.houseId" class="item">
-          <HouseItemV3 v-if="house.discoveryContentType == 3" :item="house.data" />
-          <HouseItemV9 v-if="house.discoveryContentType == 9" :item="house.data" />
+          <HouseItemV3 v-if="house.discoveryContentType == 3" :item="house.data" @click="itemClick(house.data.houseId)"/>
+          <HouseItemV9 v-if="house.discoveryContentType == 9" :item="house.data" @click="itemClick(house.data.houseId)"/>
         </li>
       </ul>
     </div>

@@ -1,11 +1,11 @@
 <script setup>
-import { useUserStore } from '@/stores/modules/user';
+import { useMainStore } from '@/stores/modules/main';
 import { storeToRefs } from 'pinia';
 import { formatDate } from '@/utils/date';
 import useCalendar from '@/hooks/useCalendar';
 
-const userStore = useUserStore();
-const { startDate, endDate, diffDay } = storeToRefs(userStore);
+const mainStore = useMainStore();
+const { startDate, endDate, diffDay } = storeToRefs(mainStore);
 
 const { show, onConfirm, formatter } = useCalendar();
 

@@ -1,9 +1,11 @@
 <script setup>
 import loadingImg from "@/assets/imgs/home/full-screen-loading.gif"
+import { useMainStore } from "@/stores/modules/main";
+const mainStore = useMainStore();
 </script>
 
 <template>
-  <div class="loading">
+  <div class="loading" @click="mainStore.isLoading = false" v-if="mainStore.isLoading">
     <div class="bg">
       <img :src="loadingImg" alt="">
     </div>
@@ -23,21 +25,19 @@ import loadingImg from "@/assets/imgs/home/full-screen-loading.gif"
   justify-content: center;
   align-items: center;
 
-  background-color: rgba(0, 0, 0, .6);
+  background-color: rgba(0, 0, 0, .4);
 
   .bg {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 300px;
-    height: 300px;
+    width: 104px;
+    height: 104px;
 
     background: url('@/assets/imgs/home/loading-bg.png') center center no-repeat;
 
     img {
-      position: relative;
-      top: -5px;
       width: 80px;
     }
   }

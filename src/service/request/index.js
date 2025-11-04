@@ -1,9 +1,10 @@
 import axios from "axios";
 import { BASE_URL, TIMEOUT } from "./config";
-import { useLoadingStore } from "@/stores/modules/loading";
+import { useMainStore } from "@/stores/modules/main";
 
-const loadingStore = useLoadingStore();
-const { start, end } = loadingStore;
+const mainStore = useMainStore();
+
+const { start, end } = mainStore;
 
 class TripRequest {
   constructor(baseURL = BASE_URL, timeout = TIMEOUT) {

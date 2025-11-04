@@ -14,7 +14,7 @@ body {
 
 .top-page {
   position: relative;
-  z-index: 2;
+  z-index: 22;
   height: 100vh;
   overflow-y: auto;
   background-color: white;

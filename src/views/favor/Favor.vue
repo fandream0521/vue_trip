@@ -1,5 +1,9 @@
 <script setup>
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
+console.log('path', route.path, route.fullPath);
+console.log("hhhhhh")
 </script>
 
 <template>

@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { diffDate, today } from '@/utils/date';
 import dayjs from "dayjs";
 
-export const useUserStore = defineStore("user", () => {
+export const useMainStore = defineStore("main", () => {
   const curDate = today();
   const nextDate = curDate.add(1, "day");
 
@@ -17,10 +17,25 @@ export const useUserStore = defineStore("user", () => {
     diffDay.value = diffDate(start, end)
   }
 
+  const isLoading = ref(false);
+
+  function start() {
+    isLoading.value = true;
+  }
+
+  function end() {
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 400)
+  }
+
   return {
     startDate,
     endDate,
     diffDay,
+    isLoading,
+    start,
+    end,
     updateDate
   }
 })

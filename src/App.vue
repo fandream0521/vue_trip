@@ -1,21 +1,15 @@
 <script setup>
-import { RouterView, useRoute } from 'vue-router';
+import { RouterView } from 'vue-router';
 import TabBarVant from './components/tab-bar/TabBarVant.vue';
 
-import { useLoadingStore } from './stores/modules/loading';
-import { storeToRefs } from 'pinia';
 import Loading from './views/loading/Loading.vue';
-
-
-const loadingStore = useLoadingStore();
-const { isLoading } = storeToRefs(loadingStore);
 </script>
 
 <template>
   <TabBarVant class="tab-bar"/>
   <!-- <TabBar class="tab-bar"/> -->
   <RouterView />
-  <Loading v-if="isLoading" />
+  <Loading />
 </template>
 
 <style scoped>

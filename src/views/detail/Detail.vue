@@ -4,6 +4,9 @@ import { useRoute, useRouter } from 'vue-router';
 import { useDetailStore } from '@/stores/modules/detail';
 import { storeToRefs } from 'pinia';
 import DetailSwipe from './cpns/DetailSwipe.vue';
+import DetailInInfos from './cpns/DetailInInfos.vue';
+import DetailFacility from './cpns/DetailFacility.vue';
+import DetailLandLord from './cpns/DetailLandLord.vue';
 const router = useRouter();
 const backClick = () => {
   router.back();
@@ -11,8 +14,7 @@ const backClick = () => {
 
 const route = useRoute();
 const detailStore = useDetailStore();
-const { detail, housePicture } = storeToRefs(detailStore);
-
+const { detail, housePicture, topModule, dynamicModule } = storeToRefs(detailStore);
 const { loadDetail } = detailStore;
 loadDetail(route.params.houseId).then(() => {
   console.log(detail)
@@ -30,6 +32,9 @@ loadDetail(route.params.houseId).then(() => {
       </template>
     </NavBar>
     <DetailSwipe :swipe-data="housePicture?.housePics"/>
+    <DetailInInfos :top-info="topModule"/>
+    <DetailFacility :house-facility="dynamicModule?.facilityModule?.houseFacility"/>
+    <DetailLandLord />
   </div>
 </template>
 

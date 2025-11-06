@@ -13,12 +13,13 @@ export const useDetailStore = defineStore("detail", () => {
   const topModule = computed(() => detail.value?.mainPart?.topModule)
   const housePicture = computed(() => detail.value?.mainPart?.topModule?.housePicture);
   const dynamicModule = computed(() => detail.value?.mainPart?.dynamicModule)
-
+  const introductionModule = computed(() => detail.value?.mainPart?.introductionModule)
   return {
     detail,
     topModule,
     housePicture,
     dynamicModule,
+    introductionModule,
     loadDetail
   }
 });

@@ -12,7 +12,7 @@ const { hotSuggests, categories } = storeToRefs(homeStore);
 const { loadHotSuggests, loadCategories } = homeStore;
 
 const cityStore = useCityStore();
-const { curCity } = storeToRefs(cityStore)
+const { curCity, curPosition } = storeToRefs(cityStore)
 
 const cityClick = () => {
   router.push({
@@ -22,6 +22,7 @@ const cityClick = () => {
 const positionClick = () => {
   navigator.geolocation.getCurrentPosition(res => {
     console.log("获取位置成功： ", res);
+    curPosition.value = res.coords;
   }, err => {
     console.log("获取位置失败：", err);
   })

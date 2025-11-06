@@ -8,6 +8,7 @@ export const useCityStore = defineStore('city', () => {
   const allCity = ref({});
   const curCity = ref({ cityName: '杭州'});
   const router = useRouter();
+  const curPosition = ref({})
 
   async function loadAllCity() {
     console.log("loading all city ...")
@@ -21,5 +22,5 @@ export const useCityStore = defineStore('city', () => {
     router.back();
   }
 
-  return { allCity, curCity, loadAllCity, setCurCity }
+  return { allCity, curCity, curPosition, loadAllCity, setCurCity }
 })

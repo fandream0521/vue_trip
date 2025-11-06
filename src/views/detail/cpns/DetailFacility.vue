@@ -40,7 +40,6 @@ const showFacilityList = computed(() => props.houseFacility.houseFacilitys?.filt
 
 <style lang="less" scoped>
 .facility {
-  margin: 10px 0;
   .facility-inner {
     background-color: #f9f9f9;
 

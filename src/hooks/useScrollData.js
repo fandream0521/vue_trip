@@ -1,6 +1,7 @@
-import { onActivated, onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
-export default function() {
+export default function(elRef) {
+  let el = window;
   const scrollTop = ref(0);
   const clientHeight = ref(0);
   const scrollHeight = ref(0);
@@ -20,16 +21,22 @@ export default function() {
 
 
   const updateScrollData = () => {
-    console.log(scrollTop.value)
-    // 兼容性处理
-    scrollTop.value =
+    if (el === window) {
+      // 兼容性处理
+      scrollTop.value =
       document.documentElement.scrollTop || document.body.scrollTop;
-    clientHeight.value =
+      clientHeight.value =
       document.documentElement.clientHeight || window.innerHeight;
-    scrollHeight.value = Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight
-    );
+      scrollHeight.value = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+    } else {
+      scrollTop.value = el.scrollTop;
+      clientHeight.value = el.clientHeight;
+      scrollHeight.value = el.scrollHeight
+    }
+    
     // 核心判断逻辑
     const distanceToBottom = scrollHeight.value - (scrollTop.value + clientHeight.value);
     isAtBottom.value = distanceToBottom <= 2;
@@ -39,13 +46,14 @@ export default function() {
   const debounceFn = debounce(updateScrollData, 10)
 
   onMounted(() => {
-    window.addEventListener("scroll", debounceFn);
-    window.addEventListener("resize", debounceFn);
+    if (elRef) el = elRef.value;
+    el.addEventListener("scroll", debounceFn);
+    el.addEventListener("resize", debounceFn);
   })
 
   onUnmounted(() => {
-    window.removeEventListener("scroll", debounceFn);
-    window.removeEventListener("resize", debounceFn);
+    el.removeEventListener("scroll", debounceFn);
+    el.removeEventListener("resize", debounceFn);
   })
 
   return {

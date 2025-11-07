@@ -11,6 +11,9 @@ import DetailComment from './cpns/DetailComment.vue';
 import DetailRules from './cpns/DetailRules.vue';
 import DetailMap from './cpns/DetailMap.vue';
 import DetailIntro from './cpns/DetailIntro.vue';
+import TabControl from '@/components/tab-control/TabControl.vue';
+import { computed, watch, ref, useTemplateRef } from 'vue';
+import useScrollData from '@/hooks/useScrollData';
 const router = useRouter();
 const backClick = () => {
   router.back();
@@ -23,10 +26,74 @@ const { loadDetail } = detailStore;
 loadDetail(route.params.houseId).then(() => {
   console.log(detail)
 })
+
+const detailRef = useTemplateRef("detailRef");
+const mainRef = useTemplateRef("main");
+const { scrollTop } = useScrollData(detailRef);
+
+const isShowTabBar = computed(() => {
+  return scrollTop.value > 300;
+})
+
+const sectionEls = ref({});
+const getSelectionEl = (value) => {
+  if (value) {
+    const el = value.$el;
+    const name = el.getAttribute("name");
+    sectionEls.value[name] = el;
+  }
+}
+
+const tabClick = (index) => {
+  let instance = sectionEls.value[titles.value[index]].offsetTop;
+  if (index !== 0) {
+    instance -= 42;
+  }
+  detailRef.value.scrollTo({
+    top: instance,
+    behavior: 'smooth'
+  })
+}
+
+
+const titles = ref([])
+
+watch(mainRef, () => {
+  if (mainRef.value) {
+    const children = Array.prototype.slice.call(mainRef.value.children);
+    titles.value = children.map(item => item.getAttribute('name')).filter(item  => item !== null);
+    console.log(titles.value)
+  }
+})
+
+
+
+const scrollTopList = computed(() => {
+  const list = [];
+  for (let title of titles.value) {
+    list.push(sectionEls.value[title].offsetTop)
+  }
+  console.log(list);
+  return list;
+})
+
+watch(scrollTop, () => {
+  
+})
+
+const active = computed(() => {
+  let finalI = 0;
+  for (let i = 0; i < scrollTopList.value.length; i++) {
+    if (scrollTop.value > scrollTopList.value[i]) {
+      finalI = i;
+    } 
+  }
+  return finalI;
+})
 </script>
 
 <template>
-  <div class="detail top-page" v-if="dynamicModule">
+  <div class="detail top-page"  ref="detailRef">
     <NavBar title="房屋详情">
       <template #left>
         <div class="back" @click="backClick">
@@ -35,14 +102,15 @@ loadDetail(route.params.houseId).then(() => {
         </div>
       </template>
     </NavBar>
-    <div class="main">
+    <TabControl :titles="titles" :model-value="active" v-if="isShowTabBar" @click="tabClick"/>
+    <div class="main" v-if="dynamicModule" ref="main" v-memo="dynamicModule">
       <DetailSwipe :swipe-data="housePicture?.housePics"/>
-      <DetailInInfos :top-info="topModule"/>
-      <DetailFacility :house-facility="dynamicModule.facilityModule?.houseFacility"/>
-      <DetailLandLord :land-lord-info="dynamicModule.landlordModule"/>
-      <DetailComment :comment-info="dynamicModule.commentModule" />
-      <DetailRules :rules-info="dynamicModule.rulesModule" />
-      <DetailMap :map-info="dynamicModule.positionModule"/>
+      <DetailInInfos :ref="getSelectionEl" name="描述" :top-info="topModule"/>
+      <DetailFacility :ref="getSelectionEl" name="设施" :house-facility="dynamicModule.facilityModule?.houseFacility"/>
+      <DetailLandLord :ref="getSelectionEl" name="房东" :land-lord-info="dynamicModule.landlordModule"/>
+      <DetailComment :ref="getSelectionEl" name="评论" :comment-info="dynamicModule.commentModule" />
+      <DetailRules :ref="getSelectionEl" name="须知" :rules-info="dynamicModule.rulesModule" />
+      <DetailMap :ref="getSelectionEl" name="周边" :map-info="dynamicModule.positionModule"/>
       <DetailIntro :intro-info="introductionModule" v-if="introductionModule"/>
     </div>
     <div class="footer">

@@ -18,11 +18,6 @@ const sortedData = computed(() => {
   return data;
 })
 
-const pictures = computed(() => {
-  return sortedData.value.map(item => item.url);
-})
-
-
 </script>
 
 <template>

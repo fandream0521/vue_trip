@@ -40,7 +40,9 @@ export default function(elRef) {
     // 核心判断逻辑
     const distanceToBottom = scrollHeight.value - (scrollTop.value + clientHeight.value);
     isAtBottom.value = distanceToBottom <= 2;
-    console.log('是否到底底部:', isAtBottom.value)
+    if (isAtBottom.value) {
+      console.log('到底了底部')
+    }
   };
 
   const debounceFn = debounce(updateScrollData, 10)

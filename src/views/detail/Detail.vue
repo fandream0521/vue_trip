@@ -71,14 +71,11 @@ watch(mainRef, () => {
 const scrollTopList = computed(() => {
   const list = [];
   for (let title of titles.value) {
-    list.push(sectionEls.value[title].offsetTop)
+    list.push(sectionEls.value[title].offsetTop - 42)
   }
+  list.push(10000000);
   console.log(list);
   return list;
-})
-
-watch(scrollTop, () => {
-  
 })
 
 const active = computed(() => {
@@ -86,7 +83,9 @@ const active = computed(() => {
   for (let i = 0; i < scrollTopList.value.length; i++) {
     if (scrollTop.value > scrollTopList.value[i]) {
       finalI = i;
-    } 
+    } else {
+      break
+    }
   }
   return finalI;
 })
@@ -103,7 +102,7 @@ const active = computed(() => {
       </template>
     </NavBar>
     <TabControl :titles="titles" :model-value="active" v-if="isShowTabBar" @click="tabClick"/>
-    <div class="main" v-if="dynamicModule" ref="main" v-memo="dynamicModule">
+    <div class="main" v-if="dynamicModule" ref="main" v-memo="[dynamicModule]">
       <DetailSwipe :swipe-data="housePicture?.housePics"/>
       <DetailInInfos :ref="getSelectionEl" name="描述" :top-info="topModule"/>
       <DetailFacility :ref="getSelectionEl" name="设施" :house-facility="dynamicModule.facilityModule?.houseFacility"/>

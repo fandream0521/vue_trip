@@ -94,7 +94,7 @@ defineProps({
 
           &::after {
             content: "";
-            display: block;
+            display: inline-block;
             position: absolute;
             bottom: 10px;
             left: -4px;

@@ -12,7 +12,7 @@ import DetailRules from './cpns/DetailRules.vue';
 import DetailMap from './cpns/DetailMap.vue';
 import DetailIntro from './cpns/DetailIntro.vue';
 import TabControl from '@/components/tab-control/TabControl.vue';
-import { computed, watch, ref, useTemplateRef } from 'vue';
+import { computed, watch, ref, useTemplateRef, onMounted } from 'vue';
 import useScrollData from '@/hooks/useScrollData';
 const router = useRouter();
 const backClick = () => {
@@ -44,11 +44,14 @@ const getSelectionEl = (value) => {
   }
 }
 
+let clickDistance = -1;
+
 const tabClick = (index) => {
   let instance = sectionEls.value[titles.value[index]].offsetTop;
   if (index !== 0) {
     instance -= 42;
   }
+  clickDistance = instance;
   detailRef.value.scrollTo({
     top: instance,
     behavior: 'smooth'
@@ -79,16 +82,28 @@ const scrollTopList = computed(() => {
 })
 
 const active = computed(() => {
+  if (clickDistance === scrollTop.value) {
+    clickDistance = -1;
+  }
+  if (clickDistance >= 0) {
+    return active.value;
+  }
   let finalI = 0;
   for (let i = 0; i < scrollTopList.value.length; i++) {
-    if (scrollTop.value > scrollTopList.value[i]) {
+    if (scrollTop.value >= scrollTopList.value[i]) {
       finalI = i;
-    } else {
-      break
-    }
+    } 
   }
+  
   return finalI;
 })
+
+onMounted(() => {
+  detailRef.value.addEventListener('touchmove', () => {
+    clickDistance = -1;
+  })
+})
+
 </script>
 
 <template>

@@ -1,18 +1,21 @@
  <script setup>
-import useScrollData from '@/hooks/useScrollData';
 import { useHomeStore } from '@/stores/modules/home';
 import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import HouseItemV3 from '@/components/house-item-v3/HouseItemV3.vue';
 import HouseItemV9 from '@/components/house-item-v9/HouseItemV9.vue';
 import { useRouter } from 'vue-router';
-
+const props = defineProps({
+  isAtBottom: {
+    type: Boolean,
+    default: false
+  }
+})
 const homeStore = useHomeStore();
 const { houseList, curPage } = storeToRefs(homeStore);
 
-const { isAtBottom } = useScrollData();
-
-watch(isAtBottom, (val) => {
+watch(() => props.isAtBottom, (val) => {
+  console.log("滚动到底部")
   if (val) {
     curPage.value += 1;
   }

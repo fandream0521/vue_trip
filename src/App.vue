@@ -6,9 +6,16 @@ import Loading from './views/loading/Loading.vue';
 </script>
 
 <template>
-  <TabBarVant class="tab-bar"/>
+  <TabBarVant class="tab-bar" />
   <!-- <TabBar class="tab-bar"/> -->
-  <RouterView />
+  <!-- <RouterView #default="{ Component }">
+    <KeepAlive include="home">
+      <component :is="Component" />
+    </KeepAlive>
+  </RouterView> -->
+  <RouterView #default="{ Component }">
+    <component :is="Component" />
+  </RouterView>
   <Loading />
 </template>
 

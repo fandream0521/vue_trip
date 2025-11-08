@@ -1,21 +1,37 @@
 <script setup>
+import { computed } from 'vue';
 import DetailIndicator from './DetailIndicator.vue';
 
-defineProps({
+const props = defineProps({
   swipeData: {
     type: Array,
     default: () => ([])
   }
 })
+
+const sortedData = computed(() => {
+  const data = props.swipeData.sort((a, b) => a.enumPictureCategory - b.enumPictureCategory);
+  for (let i = 0; i < data.length; i++) {
+    data[i].orderIndex = i;
+  }
+  console.log('sorted', data);
+  return data;
+})
+
+const pictures = computed(() => {
+  return sortedData.value.map(item => item.url);
+})
+
+
 </script>
 
 <template>
   <van-swipe class="swipe-list">
-    <van-swipe-item class="item" v-for="picture in swipeData">
+    <van-swipe-item class="item" v-for="picture in sortedData">
       <img :src="picture.url" />
     </van-swipe-item>
     <template #indicator="{ active }">
-      <DetailIndicator :swipe-data="swipeData" :cur-active="active" class="custom-indicator"/>
+      <DetailIndicator :swipe-data="sortedData" :cur-active="active" class="custom-indicator"/>
     </template>
   </van-swipe>
 </template>
